@@ -86,7 +86,7 @@ const Homepage = () => {
                         <span className="title"> Nos nouveautés</span>
                     </div>
 
-                    <div className='d-flex flex-wrap justify-content-center'>
+                    <div className='d-flex mt-4 mb-4  flex-wrap justify-content-center'>
                         <ProductCard />
                         <ProductCard />
                         <ProductCard />

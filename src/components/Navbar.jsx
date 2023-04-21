@@ -2,6 +2,8 @@ import React from 'react'
 import logo from "../assets/navbar/logo.png"
 import menuhamburger from "../assets/navbar/menuhamburger.png"
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 
 
 const Navbar = () => {
@@ -23,7 +25,7 @@ const Navbar = () => {
 
                         </a>
                         <a className="nav-link" href="#">Promotions</a>
-                        <a className="nav-link" href="#">Catalogue</a>
+                        <Link to="/catalogue" className="nav-link" href="#">Catalogue</Link>
                     </div>
 
                 </div>

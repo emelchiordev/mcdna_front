@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import newtorkicon from '../assets/footer/newtorkicon.png'
 
+
 const Footer = () => {
     return (
         <Wrapper>
@@ -13,7 +14,7 @@ const Footer = () => {
             <hr style={{ "color": "white", "width": "90%", "margin": "auto" }}></hr>
 
             <MenuItem className='mt-4 pb-4'>
-                <ul className='d-flex justify-content-around w-75 m-auto' style={{ "list-style": "none" }}>
+                <ul className='d-flex justify-content-around w-75 m-auto' style={{ "listStyle": "none" }}>
                     <li>MENTIONS LEGALES</li>
                     <li>NOS CGU</li>
                     <li>CHARTE DES COOKIES</li>
@@ -26,6 +27,7 @@ const Footer = () => {
 }
 
 const Wrapper = styled.div`
+
 with:100%;
 margin-top:2rem;
 font-family:"maven_proregular";

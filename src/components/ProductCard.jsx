@@ -11,10 +11,10 @@ const ProductCard = ({ price, label, description }) => {
                 <Picture src={product} alt='picture 1'></Picture>
             </div>
             <div className=''>
-                <span className='ms-2' style={{ "fontWeight": "bold" }}>2.50€</span>
+                <span className='ms-2' style={{ "fontWeight": "bold" }}>{price ? price : "2.50€"}</span>
             </div>
             <div className='ms-2'>
-                test product
+                {label ? label : "test produit"}
             </div>
         </Wrapper>
     )
