@@ -44,6 +44,12 @@
 
 .navbar-extend-style a:hover {
     color: var(--secondary-color) !important;
+}
+
+.title {
+    margin-left: 1rem;
+    color: var(--primary-color) !important;
+    font-size: 1.1rem;
 
 }
 

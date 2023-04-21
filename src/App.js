@@ -1,12 +1,17 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-import Homepage from "./pages/homepage";
+import Homepage from "./pages/Homepage";
+import Footer from "./components/Footer";
 
 const App = () => {
     return (
         <div container='fluid'>
-            <Navbar></Navbar>
-            <Homepage></Homepage>
+            <div className={{ "minHeigth": "100vh" }}>
+                <Navbar></Navbar>
+                <Homepage></Homepage>
+                <Footer></Footer>
+            </div>
+
         </div>
     )
 }
