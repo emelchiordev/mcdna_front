@@ -29,9 +29,11 @@ const Navbar = () => {
                     </div>
 
                 </div>
-                <div className="d-flex me-2">
-                    <PrivateButton>Espace privé</PrivateButton>
-                </div>
+                <Link style={{ textDecoration: 'none' }} to="/espace-prive">
+                    <div className="d-flex me-2">
+                        <PrivateButton>Espace privé</PrivateButton>
+                    </div>
+                </Link>
             </div>
         </nav>
     )

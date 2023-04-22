@@ -26,7 +26,8 @@
     --secondary-color: #FFAE3B;
 }
 
-.navbar-brand {
+.navbar-brand,
+h1 {
     font-family: 'montserratbold';
     font-size: 1.7rem;
     font-weight: bold;

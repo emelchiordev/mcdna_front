@@ -27,7 +27,8 @@ const Footer = () => {
 }
 
 const Wrapper = styled.div`
-
+postion:absolute;
+bottom:0;
 with:100%;
 margin-top:2rem;
 font-family:"maven_proregular";
