@@ -5,7 +5,7 @@ import logo from "../assets/navbar/logo.png"
 import Loginapi from '../services/Loginapi';
 
 
-const LoginPage = () => {
+const LoginPage = ({ setAuthenticated }) => {
 
     const navigate = useNavigate();
 
@@ -30,6 +30,7 @@ const LoginPage = () => {
         Loginapi.setLogin(credentials)
             .then((response) => {
                 if (response.status === 204 || response.status === 200) {
+                    setAuthenticated(true)
                     navigate("../", { replace: true });
                 }
             })

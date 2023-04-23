@@ -3,10 +3,20 @@ import logo from "../assets/navbar/logo.png"
 import menuhamburger from "../assets/navbar/menuhamburger.png"
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { logout } from '../services/checkJwtCookies';
+import { useNavigate } from 'react-router-dom';
 
 
+const Navbar = ({ authenticated, setAuthenticated }) => {
 
-const Navbar = () => {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout()
+        navigate("../", { replace: true });
+
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-extend-style">
             <div className="container">
@@ -29,11 +39,17 @@ const Navbar = () => {
                     </div>
 
                 </div>
-                <Link style={{ textDecoration: 'none' }} to="/espace-prive">
-                    <div className="d-flex me-2">
-                        <PrivateButton>Espace privé</PrivateButton>
-                    </div>
-                </Link>
+                {authenticated ?
+                    (<div className="d-flex me-2" onClick={handleLogout}>
+                        <PrivateButton authenticated>Deconnexion</PrivateButton>
+                    </div>) :
+                    (<Link style={{ textDecoration: 'none' }} to="/espace-prive">
+                        <div className="d-flex me-2">
+                            <PrivateButton>Espace privé</PrivateButton>
+                        </div>
+                    </Link>)
+                }
+
             </div>
         </nav>
     )
@@ -48,11 +64,12 @@ padding-right:1rem;
 padding-top:4px;
 padding-bottom:4px;
 border-radius:20px;
-background-color:var(--secondary-color);
+background-color:${props => props.authenticated ? 'var(--primary-color);' : "var(--secondary-color);"}
 &:hover{
-    background-color:var(--primary-color);
+    background-color:${props => props.authenticated ? 'var(--secondary-color);' : "var(--primary-color);"}
 
 }
 `
+
 
 export default Navbar
