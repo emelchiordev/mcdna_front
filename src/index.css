@@ -1,0 +1,59 @@
+@font-face {
+    font-family: 'montserratbold';
+    src: url('/src/assets/font/montserrat-bold-webfont.eot');
+    src: url('/src/assets/font/montserrat-bold-webfont.eot?#iefix') format('embedded-opentype'),
+        url('/src/assets/font/montserrat-bold-webfont.woff2') format('woff2'),
+        url('/src/assets/font/montserrat-bold-webfont.woff') format('woff'),
+        url('/src/assets/font/montserrat-bold-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'maven_proregular';
+    src: url('/src/assets/font/mavenpro-regular-webfont.eot');
+    src: url('/src/assets/font/mavenpro-regular-webfont.eot?#iefix') format('embedded-opentype'),
+        url('/src/assets/font/mavenpro-regular-webfont.woff2') format('woff2'),
+        url('/src/assets/font/mavenpro-regular-webfont.woff') format('woff'),
+        url('/src/assets/font/mavenpro-regular-webfont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+:root {
+    --primary-color: #007A3E;
+    --secondary-color: #FFAE3B;
+}
+
+.navbar-brand,
+h1 {
+    font-family: 'montserratbold';
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-nav a {
+    font-family: 'maven_proregular';
+    color: var(--primary-color) !important;
+    opacity: 0.9;
+    padding-left: 2rem !important;
+}
+
+.navbar-extend-style a:hover {
+    color: var(--secondary-color) !important;
+}
+
+.title {
+    margin-left: 1rem;
+    color: var(--primary-color) !important;
+    font-size: 1.1rem;
+
+}
+
+.navbar-extend-style {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+}
