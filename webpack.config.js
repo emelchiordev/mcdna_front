@@ -53,6 +53,7 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    disableHostCheck: true
   },
   plugins: [
     new HtmlWebPackPlugin({
