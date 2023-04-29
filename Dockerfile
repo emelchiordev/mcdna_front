@@ -7,8 +7,9 @@ WORKDIR /app
 # Copiez le fichier package.json dans le répertoire de travail
 COPY package*.json ./
 
-ENV API_URL="https://mercadona.emelchior.dev/api"
-ENV ROOT_URL="https://mercadona.emelchior.dev"
+ENV API_URL "https://mercadona.emelchior.dev/api"
+ENV ROOT_URL "https://mercadona.emelchior.dev"
+ENV WDS_SOCKET_PORT 0
 
 # Installez les dépendances de l'application
 RUN npm install
