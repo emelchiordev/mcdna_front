@@ -15,6 +15,7 @@ import { checkJwtCookies } from "./services/checkJwtCookies";
 
 const App = () => {
     checkJwtCookies()
+
     return (
         <Provider store={store}>
             <BrowserRouter>

@@ -2,7 +2,8 @@ import axios from "axios"
 import { API_URL } from "./config"
 
 const setLogin = async (credentials) => {
-    console.log("its post")
+
+    console.log(API_URL)
     const response = await axios.post(API_URL + "login_check", credentials, {
         headers: {
             'Content-Type': 'application/json',
