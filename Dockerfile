@@ -1,6 +1,7 @@
 # Utilisez une image Node.js comme base
 FROM node:18
 
+ENV NODE_ENV=production
 # Créez un répertoire de travail pour l'application
 WORKDIR /app
 
