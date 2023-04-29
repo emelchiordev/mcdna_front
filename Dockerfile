@@ -7,6 +7,9 @@ WORKDIR /app
 # Copiez le fichier package.json dans le répertoire de travail
 COPY package*.json ./
 
+
+ENV API_URL="http://172.10.0.50:80/api/"
+ENV ROOT_URL="http://172.10.0.50:80"
 # Installez les dépendances de l'application
 RUN npm install
 
