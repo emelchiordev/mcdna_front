@@ -10,12 +10,16 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import { checkJwtCookies } from "./services/checkJwtCookies";
+import { API_URL } from "./services/config";
+
 
 
 
 const App = () => {
     checkJwtCookies()
     console.log(process.env.API_URL)
+    console.log(process.env.NODE_ENV)
+    console.log(API_URL)
     return (
         <Provider store={store}>
             <BrowserRouter>
