@@ -9,7 +9,9 @@ WORKDIR /app
 COPY package*.json ./
 
 # Installez les dépendances de l'application
+RUN npm install -g webpack-cli
 RUN npm install
+
 
 # Copiez le reste des fichiers de l'application dans le répertoire de travail
 COPY . .
