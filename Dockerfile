@@ -1,16 +1,15 @@
 # Utilisez une image Node.js comme base
 FROM node:18
 
-ENV NODE_ENV=production
 # Créez un répertoire de travail pour l'application
 WORKDIR /app
 
 # Copiez le fichier package.json dans le répertoire de travail
 COPY package*.json ./
+ENV NODE_ENV=production
 
 # Installez les dépendances de l'application
-RUN npm install -g webpack-cli
-RUN npm install
+RUN npm install --production
 
 
 # Copiez le reste des fichiers de l'application dans le répertoire de travail
