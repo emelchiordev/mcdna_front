@@ -7,7 +7,6 @@ WORKDIR /app
 # Copiez le fichier package.json dans le répertoire de travail
 COPY package*.json ./
 
-ENV NODE_ENV="production"
 ENV API_URL="http://172.10.0.50:80/api/"
 ENV ROOT_URL="http://172.10.0.50:80"
 
@@ -20,6 +19,8 @@ COPY . .
 
 # Construisez l'application React
 RUN npm run build
+
+ENV NODE_ENV production
 
 
 # Exposez le port 80 pour accéder à l'application dans le navigateur
