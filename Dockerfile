@@ -9,7 +9,7 @@ COPY package*.json ./
 ENV NODE_ENV=production
 
 # Installez les dépendances de l'application
-RUN npm install --production
+RUN npm install --omit=dev
 
 
 # Copiez le reste des fichiers de l'application dans le répertoire de travail
