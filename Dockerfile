@@ -6,7 +6,6 @@ WORKDIR /app
 
 # Copiez le fichier package.json dans le répertoire de travail
 COPY package*.json ./
-ENV --env.NODE_ENV=production
 
 # Installez les dépendances de l'application
 RUN npm install
