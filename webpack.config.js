@@ -1,6 +1,8 @@
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
+
 
 
 module.exports = {
@@ -11,6 +13,11 @@ module.exports = {
   },
   resolve: {
     modules: [path.join(__dirname, 'src'), 'node_modules'],
+    fallback: {
+      fs: false,
+      path: require.resolve('path-browserify'),
+      os: require.resolve('os-browserify/browser')
+    },
     alias: {
       react: path.join(__dirname, 'node_modules', 'react'),
     },
@@ -63,6 +70,9 @@ module.exports = {
       patterns: [
         { from: "src/assets", to: "assets" } //to the dist root directory
       ],
+    }),
+    new Dotenv({
+      path: "./.env"
     }),
   ],
 };
