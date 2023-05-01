@@ -36,6 +36,8 @@ const Navbar = ({ authenticated, setAuthenticated }) => {
                         </a>
                         <a className="nav-link" href="#">Promotions</a>
                         <Link to="/catalogue" className="nav-link" href="#">Catalogue</Link>
+                        <Link to="/gestion-catalogue" className="nav-link" href="#">Mise à jour produit</Link>
+
                     </div>
 
                 </div>

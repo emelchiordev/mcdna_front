@@ -3,13 +3,14 @@ import Navbar from "./container/NavBar";
 import Homepage from "./pages/Homepage";
 import Footer from "./components/Footer";
 import { Router } from "react-router-dom";
-import CatalogPage from "./pages/CatalogPage";
-import PromotionPage from "./pages/PromotionPage";
+import PublicCatalogPage from "./pages/PublicCatalogPage";
+import PublicPromotionPage from "./pages/PublicPromotionPage";
 import LoginPage from "./container/LoginPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
 import { checkJwtCookies } from "./services/checkJwtCookies";
+import CatalogUpdate from "./pages/CatalogUpdate";
 import { API_URL } from "./services/config";
 
 
@@ -17,9 +18,7 @@ import { API_URL } from "./services/config";
 
 const App = () => {
     checkJwtCookies()
-    console.log(process.env.API_URL)
-    console.log(process.env.NODE_ENV)
-    console.log(API_URL)
+
     return (
         <Provider store={store}>
             <BrowserRouter>
@@ -27,12 +26,13 @@ const App = () => {
                     <Navbar></Navbar>
                     <Routes>
                         <Route path="/" element={<Homepage />} />
-                        <Route path="/catalogue" element={<CatalogPage />} />
-                        <Route path="/promotions" element={<PromotionPage />} />
+                        <Route path="/catalogue" element={<PublicCatalogPage />} />
+                        <Route path="/promotions" element={<PublicPromotionPage />} />
+                        <Route path="/gestion-catalogue" element={<CatalogUpdate />} />
                         <Route path="/espace-prive" element={<LoginPage />} />
 
                     </Routes>
-                    <Footer></Footer>
+                    <Footer className="position-absolute bottom-0 left-0 right-0"></Footer>
                 </div>
             </BrowserRouter>
         </Provider>

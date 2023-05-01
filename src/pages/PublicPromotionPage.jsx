@@ -1,9 +1,9 @@
 import React from 'react'
 
-const PromotionPage = () => {
+const PublicPromotionPage = () => {
     return (
         <div>PromotionPage</div>
     )
 }
 
-export default PromotionPage
+export default PublicPromotionPage

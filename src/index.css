@@ -57,3 +57,9 @@ h1 {
 .navbar-extend-style {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
 }
+
+input:focus {
+    background-color: #007A3E;
+    outline: none;
+    /* optionnel : pour enlever le contour bleu */
+}
