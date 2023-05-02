@@ -2,15 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Loading from './Loading';
 import CatalogApi from '../services/CatalogApi';
+import CategoryApi from '../services/CategoryApi';
 
 const formData = new FormData();
 const AddProduct = () => {
 
     const inputFileRef = useRef(null)
-
+    const [categories, setCategories] = useState([])
     const [show, setShow] = useState(false);
     const [sending, setSending] = useState(false)
     const [product, setProduct] = useState({ label: "", description: "", price: "" })
+    const [selectedCategory, setSelectedCategory] = useState('')
     const handleClose = () => {
         inputFileRef.current.value = null
         setProduct({ label: "", description: "", price: "" })
@@ -18,20 +20,37 @@ const AddProduct = () => {
         setShow(false)
     };
     const handleShow = () => setShow(true);
-    const [errorValidation, setErrorValidation] = useState({
-        title: "",
-        description: ""
+    const [errorValidation, setErrorValidation] = useState({ title: "", description: "" })
 
-    })
+    useEffect(() => {
+        CategoryApi.getCategories().then(response => {
+            console.log(response.data["hydra:member"])
+            if (response.status === 200) {
+                setCategories(response.data["hydra:member"])
+            }
+        }).catch(error => {
+
+        })
+    }, [])
 
 
+    // Construction de l'objet produit àfin de l'envoyer sur l'API.
     const handleChange = (event) => {
-        if (event.target.name === 'imageFile') {
-            setProduct({ ...product, [event.target.name]: event.target.files[0] })
-        } else {
-            setProduct({ ...product, [event.target.name]: event.target.value })
+        switch (event.target.name) {
+            case 'imageFile':
+                setProduct({ ...product, [event.target.name]: event.target.files[0] });
+                break;
+            case 'category':
+                setProduct({ ...product, [event.target.name]: '/api/categories/' + event.target.value });
+                setSelectedCategory(event.target.value)
+
+                break;
+            default:
+                setProduct({ ...product, [event.target.name]: event.target.value });
         }
     }
+
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -60,7 +79,6 @@ const AddProduct = () => {
 
         })
 
-        // Code pour envoyer le formulaire
 
     };
 
@@ -104,6 +122,19 @@ const AddProduct = () => {
                                     {errorValidation.price && <p className='invalid-feedback d-block'>{errorValidation.price}</p>}
 
                                 </div>
+                                <div className="mb-3">
+                                    <label htmlFor="category" className="form-label">Catégorie</label>
+                                    <select className="form-select" id="category" name="category" value={selectedCategory} onChange={handleChange}>
+                                        <option value="">Sélectionner une catégorie</option>
+                                        {categories.map((category) => (
+                                            <option key={category.id} value={category.id}>
+                                                {category.libelle}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {errorValidation.category && <p className='invalid-feedback d-block'>{errorValidation.category}</p>}
+                                </div>
+
                                 <div className="mb-3">
                                     <label htmlFor="image" className="form-label">Image</label>
                                     <input type="file" className="form-control-file" id="image" name="imageFile" accept="image/*" ref={inputFileRef} onChange={handleChange} />

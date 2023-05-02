@@ -13,6 +13,8 @@ const AddCategory = () => {
     const [category, setCategory] = useState({ libelle: "" })
     const [categories, setCategories] = useState([])
     const [categoryUpdate, setCategoryUpdate] = useState({ libelle: "" })
+    const [errorValidation, setErrorValidation] = useState({ libelle: '' })
+
 
     const handleChange = (event) => {
         setCategory({ [event.target.name]: event.target.value })
@@ -22,6 +24,8 @@ const AddCategory = () => {
         CategoryApi.getCategories().then(response => {
             if (response.status === 200) {
                 setCategories(response.data["hydra:member"])
+                setErrorValidation({})
+
             }
         }).catch(error => {
 
@@ -30,12 +34,20 @@ const AddCategory = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        setErrorValidation({})
         CategoryApi.setCategory(category).then(response => {
             if (response.status === 201) {
                 setUpdate(!update)
             }
         }).catch(error => {
-            console.log(error)
+
+            if (error.response.data['violations']) {
+                const apiError = {}
+                error.response.data['violations'].map(error => {
+                    apiError[error.propertyPath] = error.message
+                })
+                setErrorValidation(apiError)
+            }
         })
     }
 
@@ -82,6 +94,8 @@ const AddCategory = () => {
                                         Libellé
                                     </label>
                                     <input type="text" className="form-control" id="label" name='libelle' value={category.label} onChange={handleChange} />
+                                    {errorValidation.libelle && <p className='invalid-feedback d-block'>{errorValidation.libelle}</p>}
+
                                 </div>
                                 <Button type="submit" className="btn btn-primary m-auto" onClick={handleSubmit}>
                                     AJOUTER
