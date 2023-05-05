@@ -4,12 +4,11 @@ import CategoryApi from '../services/CategoryApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFloppyDisk, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const AddCategory = () => {
+const AddCategory = ({ handleClose }) => {
 
     const [show, setShow] = useState(false)
     const [update, setUpdate] = useState(false)
     const handleShow = () => setShow(true)
-    const handleClose = () => setShow(false)
     const [category, setCategory] = useState({ libelle: "" })
     const [categories, setCategories] = useState([])
     const [categoryUpdate, setCategoryUpdate] = useState({ libelle: "" })
@@ -72,15 +71,8 @@ const AddCategory = () => {
     return (
 
         <div className="mb-3">
-            <div className='d-flex justify-content-between'>
 
-                <Button variant="primary" onClick={handleShow} style={{ marginRight: '10px' }}>
-                    Ajouter une catégorie
-                </Button>
-            </div>
-
-
-            <div className={`modal fade ${show ? "show" : ""}`} style={{ display: show ? "block" : "none", backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+            <div className={`modal fade show`} style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content rounded-0">
                         <div className="modal-header rounded-0" style={{ backgroundColor: '#007A3E', color: "white" }}>

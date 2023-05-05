@@ -5,26 +5,18 @@ import CatalogApi from '../services/CatalogApi';
 import CategoryApi from '../services/CategoryApi';
 
 const formData = new FormData();
-const AddProduct = () => {
+const AddProduct = ({ update, handleClose }) => {
 
     const inputFileRef = useRef(null)
     const [categories, setCategories] = useState([])
-    const [show, setShow] = useState(false);
     const [sending, setSending] = useState(false)
     const [product, setProduct] = useState({ label: "", description: "", price: "" })
     const [selectedCategory, setSelectedCategory] = useState('')
-    const handleClose = () => {
-        inputFileRef.current.value = null
-        setProduct({ label: "", description: "", price: "" })
-        setErrorValidation({})
-        setShow(false)
-    };
-    const handleShow = () => setShow(true);
     const [errorValidation, setErrorValidation] = useState({ title: "", description: "" })
 
     useEffect(() => {
+
         CategoryApi.getCategories().then(response => {
-            console.log(response.data["hydra:member"])
             if (response.status === 200) {
                 setCategories(response.data["hydra:member"])
             }
@@ -54,18 +46,23 @@ const AddProduct = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
         setSending(true)
         for (let key in product) {
             formData.append(key, product[key])
         }
-
+  
         CatalogApi.setProduct(formData).then((response) => {
             if (response.status === 201) {
                 inputFileRef.current.value = null
-                setProduct({ label: "", description: "", price: "" })
+                for (const key of formData.keys()) {
+                    formData.delete(key);
+                }
                 setErrorValidation({})
                 setSending(false)
-                setShow(false)
+                update()
+                handleClose()
+
             }
         }).catch(error => {
             if (error.response.data['violations']) {
@@ -76,26 +73,13 @@ const AddProduct = () => {
                 setErrorValidation(apiError)
             }
             setSending(false)
-
         })
-
-
     };
 
     return (
+
         <>
-            <div className="mb-3  me-3">
-                <div className='d-flex justify-content-around'>
-
-                    <Button variant="primary" onClick={handleShow}>
-                        Ajouter un produit
-                    </Button>
-                </div>
-            </div>
-            <hr>
-            </hr>
-
-            <div className={`modal fade ${show ? "show" : ""}`} style={{ display: show ? "block" : "none", backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+            <div className={`modal fade show`} style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content rounded-0">
                         <div className="modal-header rounded-0" style={{ backgroundColor: '#007A3E', color: "white" }}>

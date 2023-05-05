@@ -7,7 +7,7 @@ import Avatar from 'react-avatar';
 import { IMAGE_URL } from '../services/config';
 import { array } from 'prop-types';
 
-const EditProduct = ({ productId, setShowModal, closeModal }) => {
+const EditProduct = ({ productId, setShowModal, closeModal, reloadProduct }) => {
     const [errorValidation, setErrorValidation] = useState({ title: "", description: "" })
     const [show, setShow] = useState(setShowModal);
     const [product, setProduct] = useState({ label: '', description: '', price: '' })
@@ -25,7 +25,6 @@ const EditProduct = ({ productId, setShowModal, closeModal }) => {
         setSending(true)
         const uriCategoryFactory = (product) => {
             if (Array.isArray(product.category) || typeof product.category === 'object') {
-                console.log('im here')
                 return { ...product, category: "/api/categories/" + product.category.id }
             } else {
                 return product
@@ -34,6 +33,7 @@ const EditProduct = ({ productId, setShowModal, closeModal }) => {
 
         CatalogApi.updateProduct(product.id, uriCategoryFactory(product)).then(response => {
             setErrorValidation({})
+            reloadProduct()
             setUpdate(!update)
 
         }).catch(error => {
@@ -79,7 +79,6 @@ const EditProduct = ({ productId, setShowModal, closeModal }) => {
             }).catch(error => setSending(false))
 
             CategoryApi.getCategories().then(response => {
-                console.log(response.data["hydra:member"])
                 if (response.status === 200) {
                     setCategories(response.data["hydra:member"])
                 }
