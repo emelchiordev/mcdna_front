@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import moment from 'moment/moment'
 import PromotionService from '../services/PromotionService'
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const AddPromotion = ({ handleClose, productId }) => {
     const [promotions, setPromotions] = useState([])
@@ -30,6 +32,14 @@ const AddPromotion = ({ handleClose, productId }) => {
 
     const handleChange = (event) => {
         setPromotion({ ...promotion, [event.target.name]: event.target.value })
+    }
+
+    const handleRemove = (promotionId) => {
+        PromotionService.deletePromotion(promotionId).then(res => {
+            if (res.status === 204) {
+                setReloadData(!reloadData)
+            }
+        }).catch(error => console.log(error))
     }
 
     useEffect(() => {
@@ -108,6 +118,7 @@ const AddPromotion = ({ handleClose, productId }) => {
                                     <th scope="col" className='text-center'>Pourcentage</th>
                                     <th scope="col" className='text-center'>Date de début</th>
                                     <th scope="col" className='text-center'>Date de fin</th>
+                                    <th scope="col" className='text-center'>Supprimer</th>
 
                                 </tr>
                             </thead>
@@ -118,6 +129,9 @@ const AddPromotion = ({ handleClose, productId }) => {
                                             <td className='text-center' scope='col'>{promotion.percentage} </td>
                                             <td className='text-center' scope='col'>{moment(promotion.startDate).format('DD/MM/YYYY')} </td>
                                             <td className='text-center' scope='col'>{moment(promotion.endDate).format('DD/MM/YYYY')} </td>
+                                            <td className='text-center' onClick={() => handleRemove(promotion.id)} style={{ cursor: "pointer" }}>
+                                                <FontAwesomeIcon icon={faTrash} />
+                                            </td>
                                         </tr>)
                                 })}
                             </tbody>
