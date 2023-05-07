@@ -1,14 +1,46 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import moment from 'moment/moment'
+import PromotionService from '../services/PromotionService'
+import styled from 'styled-components'
 
 const AddPromotion = ({ handleClose, productId }) => {
-    const [percentage, setPercentage] = useState("")
-    const [startDate, setStartDate] = useState("")
-    const [endDate, setEndDate] = useState("")
+    const [promotions, setPromotions] = useState([])
+    const [promotion, setPromotion] = useState({ percentage: "", startDate: "", endDate: "", products: "/api/products/" + productId })
+    const [reloadData, setReloadData] = useState(false)
+    const [errorValidation, setErrorValidation] = useState({ libelle: '' })
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // envoyer les données du formulaire au serveur
+    // envoi les données du formulaire au serveur
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        setErrorValidation({})
+        PromotionService.setPromotion(promotion).then(res => {
+            if (res.status === 201) {
+                setReloadData(!reloadData)
+            }
+        }).catch(error => {
+            if (error.response.data['violations']) {
+                const apiError = {}
+                error.response.data['violations'].map(error => {
+                    apiError[error.propertyPath] = error.message
+                })
+                setErrorValidation(apiError)
+            }
+        })
     }
+
+    const handleChange = (event) => {
+        setPromotion({ ...promotion, [event.target.name]: event.target.value })
+    }
+
+    useEffect(() => {
+        PromotionService.getPromotion(productId).then((response) => {
+            if (response.status === 200) {
+                setPromotions(response.data["hydra:member"])
+            }
+        }).catch(error => console.log(error))
+    }, [reloadData])
+
+
 
     return (
         <div className="mb-3">
@@ -22,45 +54,50 @@ const AddPromotion = ({ handleClose, productId }) => {
                         <div className="modal-body">
 
                             <form onSubmit={handleSubmit}>
-                                <div className="form-group">
+                                <div className="form-group mb-3">
                                     <label>Pourcentage de promotion :</label>
                                     <input
                                         type="number"
                                         className="form-control"
                                         placeholder="Entrez le pourcentage de promotion"
-                                        value={percentage}
-                                        onChange={(e) => setPercentage(e.target.value)}
-                                        required
+                                        name="percentage"
+                                        value={promotion.percentage}
+                                        onChange={handleChange}
                                     />
+                                    {errorValidation.percentage && <p className='invalid-feedback d-block'>{errorValidation.percentage}</p>}
                                 </div>
 
-                                <div className="form-group">
+                                <div className="form-group mb-3">
                                     <label>Date de début :</label>
                                     <input
                                         type="date"
                                         className="form-control"
                                         placeholder="Entrez la date de début"
-                                        value={startDate}
-                                        onChange={(e) => setStartDate(e.target.value)}
-                                        required
+                                        name="startDate"
+                                        value={promotion.startDate}
+                                        onChange={handleChange}
                                     />
+                                    {errorValidation.startDate && <p className='invalid-feedback d-block'>{errorValidation.startDate}</p>}
+
                                 </div>
 
-                                <div className="form-group">
+                                <div className="form-group mb-3">
                                     <label>Date de fin :</label>
                                     <input
                                         type="date"
                                         className="form-control"
                                         placeholder="Entrez la date de fin"
-                                        value={endDate}
-                                        onChange={(e) => setEndDate(e.target.value)}
-                                        required
+                                        name="endDate"
+                                        value={promotion.endDate}
+                                        onChange={handleChange}
                                     />
+                                    {errorValidation.endDate && <p className='invalid-feedback d-block'>{errorValidation.endDate}</p>}
+
                                 </div>
 
-                                <button type="submit" className="btn btn-primary">
+                                <Button type="submit" className="btn w-25 m-auto">
                                     Enregistrer
-                                </button>
+                                </Button>
                             </form>
                         </div>
                         <hr></hr>
@@ -68,15 +105,21 @@ const AddPromotion = ({ handleClose, productId }) => {
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Libellé</th>
-                                    <th scope="col">Mettre à jour</th>
-                                    <th scope="col">Supprimer</th>
+                                    <th scope="col" className='text-center'>Pourcentage</th>
+                                    <th scope="col" className='text-center'>Date de début</th>
+                                    <th scope="col" className='text-center'>Date de fin</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-
-
+                                {promotions.map(promotion => {
+                                    return (
+                                        <tr key={promotion.id}>
+                                            <td className='text-center' scope='col'>{promotion.percentage} </td>
+                                            <td className='text-center' scope='col'>{moment(promotion.startDate).format('DD/MM/YYYY')} </td>
+                                            <td className='text-center' scope='col'>{moment(promotion.endDate).format('DD/MM/YYYY')} </td>
+                                        </tr>)
+                                })}
                             </tbody>
                         </table>
                         <div className="modal-footer">
@@ -92,5 +135,26 @@ const AddPromotion = ({ handleClose, productId }) => {
 
     )
 }
+
+const Button = styled.button`
+background-color: #007A3E;
+color: white;
+border: none;
+padding-bottom: 5px;
+padding-top:5px;
+padding-left:10px;
+padding-right:10px;
+border-radius: 30px;
+cursor: pointer;
+display: flex;
+justify-content: center;
+align-items: center;
+transition: all 0.2s ease-in-out;
+&:hover {
+  background-color: #006331;
+}
+&:active {
+  transform: translateY(2px);
+}`
 
 export default AddPromotion
