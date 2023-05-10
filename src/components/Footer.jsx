@@ -6,22 +6,23 @@ import newtorkicon from '../assets/footer/newtorkicon.png'
 const Footer = () => {
     return (
         <Wrapper>
-            <div className='d-flex pt-4 align-items-center align-self-start justify-content-end me-5 mb-4'>
+            <div className='container'>
+                <div className='d-flex pt-4 align-items-center align-self-start justify-content-end me-5 mb-4 w-100 flex-wrap'>
 
-                <FollowLine>SUIVEZ-NOUS SUR  : </FollowLine>
-                <img src={newtorkicon} width='200px' alt='network social'></img>
+                    <FollowLine>SUIVEZ-NOUS SUR  : </FollowLine>
+                    <img src={newtorkicon} width='200px' alt='network social'></img>
+                </div>
+                <hr style={{ "color": "white", "width": "90%", "margin": "auto" }}></hr>
+
+                <MenuItem className='mt-4 pb-4'>
+                    <ul className='d-flex justify-content-center flex-wrap p-1' style={{ "listStyle": "none", "padding": "0" }}>
+                        <li style={{ "flex-basis": "100%" }}>MENTIONS LEGALES</li>
+                        <li style={{ "flex-basis": "100%" }}>NOS CGU</li>
+                        <li style={{ "flex-basis": "100%" }}>CHARTE DES COOKIES</li>
+                        <li style={{ "flex-basis": "100%" }}>PREFERENCE DES COOKIES</li>
+                    </ul>
+                </MenuItem>
             </div>
-            <hr style={{ "color": "white", "width": "90%", "margin": "auto" }}></hr>
-
-            <MenuItem className='mt-4 pb-4'>
-                <ul className='d-flex justify-content-around w-75 m-auto' style={{ "listStyle": "none" }}>
-                    <li>MENTIONS LEGALES</li>
-                    <li>NOS CGU</li>
-                    <li>CHARTE DES COOKIES</li>
-                    <li>PREFERENCE DES COOKIES</li>
-                </ul>
-            </MenuItem>
-
         </Wrapper>
     )
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./container/NavBar";
 import Homepage from "./pages/Homepage";
 import Footer from "./components/Footer";
@@ -12,12 +12,15 @@ import store from "./store";
 import { checkJwtCookies } from "./services/checkJwtCookies";
 import CatalogUpdate from "./pages/CatalogUpdate";
 import { API_URL } from "./services/config";
+import ProtectedRoute from "./container/ProtectedRoute";
 
 
 
 
 const App = () => {
-    checkJwtCookies()
+
+    checkJwtCookies();
+
 
     return (
         <Provider store={store}>
@@ -25,12 +28,17 @@ const App = () => {
                 <div container='fluid' className="vh-100 position-relative">
                     <Navbar></Navbar>
                     <Routes>
+
                         <Route path="/" element={<Homepage />} />
                         <Route path="/catalogue" element={<PublicCatalogPage />} />
                         <Route path="/promotions" element={<PublicPromotionPage />} />
-                        <Route path="/gestion-catalogue" element={<CatalogUpdate />} />
-                        <Route path="/espace-prive" element={<LoginPage />} />
+                        <Route path="/gestion-catalogue" element={
+                            <ProtectedRoute  >
+                                <CatalogUpdate />
+                            </ProtectedRoute>
 
+                        } />
+                        <Route path="/espace-prive" element={<LoginPage />} />
                     </Routes>
                     <Footer className="position-absolute bottom-0 left-0 right-0"></Footer>
                 </div>

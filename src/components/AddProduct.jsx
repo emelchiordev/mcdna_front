@@ -2,51 +2,67 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Loading from './Loading';
 import CatalogApi from '../services/CatalogApi';
+import CategoryApi from '../services/CategoryApi';
 
 const formData = new FormData();
-const AddProduct = () => {
+const AddProduct = ({ update, handleClose }) => {
 
     const inputFileRef = useRef(null)
-
-    const [show, setShow] = useState(false);
+    const [categories, setCategories] = useState([])
     const [sending, setSending] = useState(false)
     const [product, setProduct] = useState({ label: "", description: "", price: "" })
-    const handleClose = () => {
-        inputFileRef.current.value = null
-        setProduct({ label: "", description: "", price: "" })
-        setErrorValidation({})
-        setShow(false)
-    };
-    const handleShow = () => setShow(true);
-    const [errorValidation, setErrorValidation] = useState({
-        title: "",
-        description: ""
+    const [selectedCategory, setSelectedCategory] = useState('')
+    const [errorValidation, setErrorValidation] = useState({ title: "", description: "" })
 
-    })
+    useEffect(() => {
+
+        CategoryApi.getCategories().then(response => {
+            if (response.status === 200) {
+                setCategories(response.data["hydra:member"])
+            }
+        }).catch(error => {
+
+        })
+    }, [])
 
 
+    // Construction de l'objet produit àfin de l'envoyer sur l'API.
     const handleChange = (event) => {
-        if (event.target.name === 'imageFile') {
-            setProduct({ ...product, [event.target.name]: event.target.files[0] })
-        } else {
-            setProduct({ ...product, [event.target.name]: event.target.value })
+        switch (event.target.name) {
+            case 'imageFile':
+                setProduct({ ...product, [event.target.name]: event.target.files[0] });
+                break;
+            case 'category':
+                setProduct({ ...product, [event.target.name]: '/api/categories/' + event.target.value });
+                setSelectedCategory(event.target.value)
+
+                break;
+            default:
+                setProduct({ ...product, [event.target.name]: event.target.value });
         }
     }
 
+
+
     const handleSubmit = (event) => {
         event.preventDefault();
+
         setSending(true)
         for (let key in product) {
             formData.append(key, product[key])
         }
-
+  
         CatalogApi.setProduct(formData).then((response) => {
             if (response.status === 201) {
                 inputFileRef.current.value = null
-                setProduct({ label: "", description: "", price: "" })
+                for (const key of formData.keys()) {
+                    formData.delete(key);
+                }
                 setErrorValidation({})
                 setSending(false)
-                setShow(false)
+                update()
+                handleClose()
+
             }
         }).catch(error => {
             if (error.response.data['violations']) {
@@ -57,27 +73,13 @@ const AddProduct = () => {
                 setErrorValidation(apiError)
             }
             setSending(false)
-
         })
-
-        // Code pour envoyer le formulaire
-
     };
 
     return (
+
         <>
-            <div className="mb-3  me-3">
-                <div className='d-flex justify-content-around'>
-
-                    <Button variant="primary" onClick={handleShow}>
-                        Ajouter un produit
-                    </Button>
-                </div>
-            </div>
-            <hr>
-            </hr>
-
-            <div className={`modal fade ${show ? "show" : ""}`} style={{ display: show ? "block" : "none", backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
+            <div className={`modal fade show`} style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content rounded-0">
                         <div className="modal-header rounded-0" style={{ backgroundColor: '#007A3E', color: "white" }}>
@@ -104,6 +106,19 @@ const AddProduct = () => {
                                     {errorValidation.price && <p className='invalid-feedback d-block'>{errorValidation.price}</p>}
 
                                 </div>
+                                <div className="mb-3">
+                                    <label htmlFor="category" className="form-label">Catégorie</label>
+                                    <select className="form-select" id="category" name="category" value={selectedCategory} onChange={handleChange}>
+                                        <option value="">Sélectionner une catégorie</option>
+                                        {categories.map((category) => (
+                                            <option key={category.id} value={category.id}>
+                                                {category.libelle}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {errorValidation.category && <p className='invalid-feedback d-block'>{errorValidation.category}</p>}
+                                </div>
+
                                 <div className="mb-3">
                                     <label htmlFor="image" className="form-label">Image</label>
                                     <input type="file" className="form-control-file" id="image" name="imageFile" accept="image/*" ref={inputFileRef} onChange={handleChange} />
