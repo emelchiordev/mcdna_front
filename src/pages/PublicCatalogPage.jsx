@@ -3,19 +3,28 @@ import CatalogApi from '../services/CatalogApi'
 import ProductCard from '../components/ProductCard'
 import CategoryApi from '../services/CategoryApi'
 import { IMAGE_URL } from '../services/config'
+import Catalog from '../loaders/Catalog'
 
 
 const PublicCatalogPage = () => {
 
     const [products, setProducts] = useState([])
     const [categories, setCategories] = useState([])
+    const [loading, setLoading] = useState(true)
     const [filteredProducts, setFilteredProducts] = useState([])
 
     useEffect(() => {
         CatalogApi.getProducts().then(res => {
             if (res.status === 200) {
                 setProducts(res.data['hydra:member'])
+                setLoading(false)
                 setFilteredProducts(res.data['hydra:member'])
+            }
+
+            return () => {
+                setProducts([])
+                setCategories([])
+                setFilteredProducts([])
             }
         }).catch(error => console.log(error))
 
@@ -50,7 +59,7 @@ const PublicCatalogPage = () => {
 
             </div>
             <div className='d-flex flex-wrap justify-content-center mt-3'>
-                {filteredProducts.map(product => {
+                {!loading && filteredProducts.map(product => {
                     return (
                         <ProductCard
                             key={product.id}
@@ -65,6 +74,7 @@ const PublicCatalogPage = () => {
                     )
                 })}
             </div>
+            {loading && <Catalog />}
         </div>
     )
 }

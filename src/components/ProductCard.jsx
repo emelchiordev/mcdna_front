@@ -5,16 +5,15 @@ import product from '../assets/homepage/mock/product1.jpg'
 const ProductCard = ({ price, label, description, picture, percent_promo, promo, remised_price }) => {
     return (
         <Wrapper>
-            {promo && <>
-                <div className='d-flex justify-content-between'>
+            {promo ? <>
+                <div className='d-flex justify-content-between' style={{ maxHeight: '20px' }}>
 
                     <Promo>{promo && promo}</Promo>
                     <span className="badge rounded-pill text-bg-light d-flex justify-content-center align-items-center">
                         <PromoPercent>-{percent_promo && (Number.isInteger(parseInt(percent_promo)) ? parseInt(percent_promo).toFixed(0) : parseInt(percent_promo).toFixed(2)) + " %"}</PromoPercent>
                     </span>
                 </div>
-            </>
-
+            </> : <div style={{ minHeight: '20px' }}></div>
             }
             <div className='d-flex justify-content-center'>
                 <Picture src={picture ? picture : product} alt='picture 1'></Picture>

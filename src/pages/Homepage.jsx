@@ -1,64 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import discount from '../assets/homepage/discount.png'
 import newproduct from '../assets/homepage/newproduct.png'
 import PromoCard from '../components/PromoCard'
 import ProductCard from '../components/ProductCard'
+import CatalogApi from '../services/CatalogApi'
+import { IMAGE_URL } from '../services/config'
 
 const Homepage = () => {
 
-    const mock_data = [
-        {
-            id: 1,
-            percent_promo: "30%",
-            price_discount: "2.70",
-            price: "5.70",
-            image: "../assets/homepage/mock/discitem1.jpg",
-            label: "Madeleines - St Michel",
-            description: ""
-        },
-        {
-            id: 2,
-            percent_promo: "30%",
-            price_discount: "2.70",
-            price: "5.70",
-            image: "../assets/homepage/mock/discitem2.jpg",
-            label: "Madeleines - St Michel",
-            description: ""
-        },
-        {
-            id: 3,
-            percent_promo: "30%",
-            price_discount: "2.70",
-            price: "5.70",
-            image: "../assets/homepage/mock/discitem3.jpg",
-            label: "Madeleines - St Michel",
-            description: ""
-        },
-        {
-            id: 4,
-            percent_promo: "30%",
-            price_discount: "2.70",
-            price: "5.70",
-            image: "../assets/homepage/mock/discitem4.jpg",
-            label: "Madeleines - St Michel",
-            description: ""
-        },
-        {
-            id: 5,
-            percent_promo: "30%",
-            price_discount: "2.70",
-            price: "5.70",
-            image: "../assets/homepage/mock/discitem5.jpg",
-            label: "Madeleines - St Michel",
-            description: ""
-        }
-    ]
+    const [productsPromotion, setProductsPromotion] = useState([])
+    const [paginatedProducts, setPaginatedProducts] = useState([])
+    const [categories, setCategories] = useState([])
+    const [loading, setLoading] = useState(true)
 
+    useEffect(() => {
+        CatalogApi.getProductsWithPaginatedActivePromotion().then(res => {
+            if (res.status === 200) {
+                setProductsPromotion(res.data['hydra:member'])
+            }
+        }).catch(error => console.log(error))
+
+        CatalogApi.getPaginatedProduct().then(res => {
+            if (res.status === 200) {
+                setPaginatedProducts(res.data['hydra:member'])
+            }
+        }).catch(error => console.log(error))
+
+        return () => {
+            setProductsPromotion([])
+            setCategories([])
+        }
+    }, [])
 
 
     return (
-        <>
+        <div style={{ minHeight: '75vh' }}>
             <WrapperPromotion>
                 <div className='container pb-4'>
                     <div className='d-flex align-items-center pt-4'>
@@ -66,12 +43,13 @@ const Homepage = () => {
                         <span className="title"> Nos promotions en cours</span>
                     </div>
                     <div className='d-flex mt-4 mb-4 justify-content-around flex-wrap'>
-                        {mock_data.map(product =>
+
+                        {productsPromotion.map(product =>
                         (<PromoCard
                             key={product.id}
-                            percent_promo={product.percent_promo}
-                            price_discount={product.price_discount}
-                            image={product.image}
+                            percent_promo={product.discountPrice[1]}
+                            price_discount={product.discountPrice[0]}
+                            picture={IMAGE_URL + product.imageName}
                             price={product.price}
                             label={product.label}
                         />)
@@ -87,24 +65,25 @@ const Homepage = () => {
                     </div>
 
                     <div className='d-flex mt-4 mb-4  flex-wrap justify-content-center'>
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-                        <ProductCard />
-
+                        {paginatedProducts.map(product =>
+                        (
+                            <ProductCard
+                                key={product.id}
+                                picture={IMAGE_URL + product.imageName}
+                                promo={product.discountPrice !== null && "promo"}
+                                label={product.label}
+                                price={product.price}
+                                description={product.description}
+                                remised_price={product.discountPrice !== null && (product.discountPrice[0]).toFixed(2)}
+                                percent_promo={product.discountPrice !== null && product.discountPrice[1]}
+                            />
+                        )
+                        )}
                     </div>
 
                 </div>
             </WrapperProduct>
-        </>
+        </div>
     )
 }
 

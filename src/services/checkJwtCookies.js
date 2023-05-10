@@ -12,27 +12,25 @@ const checkJwtCookies = () => {
             const decodedJwt = jwt_decode(jwt);
             const currentTime = Date.now() / 1000;
             if (decodedJwt.exp < currentTime) {
-                store.dispatch(setAuthenticated(false));
+                store.dispatch(setAuthenticated({ status: false, roles: [] }));
             } else {
-                const userInfo = {
-                    id: decodedJwt.roles,
-                    email: decodedJwt.email,
-                };
-                store.dispatch(setAuthenticated(true));
+
+                const roles = decodedJwt.roles
+                store.dispatch(setAuthenticated({ status: true, roles }));
             }
         } catch (error) {
             console.error("Invalid JWT token", error);
-            store.dispatch(setAuthenticated(false));
+            store.dispatch(setAuthenticated({ status: false, roles: [] }));
         }
     } else {
-        store.dispatch(setAuthenticated(false));
+        store.dispatch(setAuthenticated({ status: false, roles: [] }));
     }
 };
 
 const logout = () => {
     console.log("im here")
     document.cookie = "jwt_hp=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    store.dispatch(setAuthenticated(false));
+    store.dispatch(setAuthenticated({ status: false, roles: [] }));
 };
 
 export { checkJwtCookies, logout };

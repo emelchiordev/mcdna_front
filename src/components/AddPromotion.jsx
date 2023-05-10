@@ -53,7 +53,9 @@ const AddPromotion = ({ handleClose, productId }) => {
 
 
     return (
+
         <div className="mb-3">
+            {console.log(promotions)}
             <div className={`modal fade show`} style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}>
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content rounded-0">

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/navbar/logo.png"
 import Loginapi from '../services/Loginapi';
-
+import { checkJwtCookies } from '../services/checkJwtCookies';
 
 const LoginPage = ({ setAuthenticated }) => {
 
@@ -30,7 +30,7 @@ const LoginPage = ({ setAuthenticated }) => {
         Loginapi.setLogin(credentials)
             .then((response) => {
                 if (response.status === 204 || response.status === 200) {
-                    setAuthenticated(true)
+                    checkJwtCookies()
                     navigate("../", { replace: true });
                 }
             })

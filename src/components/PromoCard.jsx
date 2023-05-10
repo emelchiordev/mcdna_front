@@ -3,18 +3,19 @@ import styled from 'styled-components'
 
 
 
-const PromoCard = ({ percent_promo, price_discount, price, label, image }) => {
+const PromoCard = ({ percent_promo, price_discount, price, label, picture }) => {
     return (
         <Wrapper>
             <div className='d-flex justify-content-between'>
                 <Promo>promo</Promo>
-                <PromoPercent>-{percent_promo}</PromoPercent>
+                <PromoPercent>-{percent_promo && (Number.isInteger(parseInt(percent_promo)) ? parseInt(percent_promo).toFixed(0) : parseInt(percent_promo).toFixed(2)) + " %"}</PromoPercent>
             </div>
             <div className='d-flex justify-content-center'>
-                <PromoPicture src={image} alt='picture 1'></PromoPicture>
+                {console.log(picture)}
+                <PromoPicture src={picture} alt='picture 1'></PromoPicture>
             </div>
             <div className=''>
-                <span className='ms-2' style={{ "color": "red", "fontWeight": "bold" }}>{price_discount}€</span>
+                <span className='ms-2' style={{ "color": "red", "fontWeight": "bold" }}>{(price_discount).toFixed(2)}€</span>
                 <span style={{ "fontSize": "0.9rem" }}> au lieu de  {price}€</span>
             </div>
             <div className='ms-2'>
@@ -25,6 +26,7 @@ const PromoCard = ({ percent_promo, price_discount, price, label, image }) => {
 }
 
 const Wrapper = styled.div`
+margin:1rem;
 width : 200px;
 font-family:"maven_proregular";
 height: 250px;

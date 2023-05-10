@@ -9,7 +9,7 @@ const isAuthenticatedSlice = createSlice({
             return {
                 ...state,
                 status: action.payload,
-                roles: action.payload ? state.roles : [""] 
+                roles: action.payload ? state.roles : [""]
             }
         }
     }
