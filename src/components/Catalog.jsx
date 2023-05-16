@@ -44,7 +44,7 @@ const Catalog = ({ update, handleShowModal }) => {
             if (response.status === 204) {
                 setUpdateProducts(!updateProducts)
             }
-        }).catch(error => {})
+        }).catch(error => { })
     }
 
     // Permet d'ouvrir la fenêtre modale afin d'éditer un produit
@@ -60,55 +60,56 @@ const Catalog = ({ update, handleShowModal }) => {
 
 
     return (<>
-        <table className="table">
-            <thead>
-                <tr>
-                    <th scope="col">Image</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Catégorie</th>
-                    <th scope="col">Prix</th>
-                    <th scope="col" className='text-center'>Promotion</th>
-                    <th scope="col" className='text-center'>Mettre à jour</th>
-                    <th scope="col" className='text-center'>Supprimer</th>
-                </tr>
-            </thead>
-            <tbody>
-                {paginatedProducts.map(product => {
-                    return (<tr key={product.id}>
-                        <td><Avatar src={IMAGE_URL + product.imageName} size='50' /></td>
-                        <th scope="row" style={{ verticalAlign: 'middle' }}>{product.label}</th>
-                        <td style={{ verticalAlign: 'middle' }}>{product.description}</td>
-                        <td style={{ verticalAlign: 'middle' }}>{product.category.libelle}</td>
-                        <td style={{ verticalAlign: 'middle' }}>{product.price} €</td>
-                        <td style={{ verticalAlign: 'middle' }} className='text-center'>
-                            <span>
-                                <button type="button" className="btn btn-warning" onClick={() => handleAddPromotion(product.id)}> <FontAwesomeIcon icon={faPercent} /> </button>
-                            </span>
+        <div className="table-responsive">
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Catégorie</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col" className='text-center'>Promotion</th>
+                        <th scope="col" className='text-center'>Mettre à jour</th>
+                        <th scope="col" className='text-center'>Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {paginatedProducts.map(product => {
+                        return (<tr key={product.id}>
+                            <td><Avatar src={IMAGE_URL + product.imageName} size='50' /></td>
+                            <th scope="row" style={{ verticalAlign: 'middle' }}>{product.label}</th>
+                            <td style={{ verticalAlign: 'middle' }}>{product.description}</td>
+                            <td style={{ verticalAlign: 'middle' }}>{product.category.libelle}</td>
+                            <td style={{ verticalAlign: 'middle' }}>{product.price} €</td>
+                            <td style={{ verticalAlign: 'middle' }} className='text-center'>
+                                <span>
+                                    <button type="button" className="btn btn-warning" onClick={() => handleAddPromotion(product.id)}> <FontAwesomeIcon icon={faPercent} /> </button>
+                                </span>
 
-                        </td>
-                        <td style={{ verticalAlign: 'middle' }} className='text-center'><button type="button" className="btn btn-warning" onClick={() => handleEditProduct(product.id)}><FontAwesomeIcon icon={faPen} /> </button>
-                        </td>
-                        <td style={{ verticalAlign: 'middle' }} className='text-center'>{deletingProductId.includes(product.id) ? <button type="button" className="btn btn-warning"  ><Spinner /> </button> : <button type="button" className="btn btn-warning" onClick={() => handleRemove(product.id)}><FontAwesomeIcon icon={faTrash} /> </button>}
-                            <span>
+                            </td>
+                            <td style={{ verticalAlign: 'middle' }} className='text-center'><button type="button" className="btn btn-warning" onClick={() => handleEditProduct(product.id)}><FontAwesomeIcon icon={faPen} /> </button>
+                            </td>
+                            <td style={{ verticalAlign: 'middle' }} className='text-center'>{deletingProductId.includes(product.id) ? <button type="button" className="btn btn-warning"  ><Spinner /> </button> : <button type="button" className="btn btn-warning" onClick={() => handleRemove(product.id)}><FontAwesomeIcon icon={faTrash} /> </button>}
+                                <span>
 
-                            </span>
-                        </td>
-                    </tr>)
-                })}
+                                </span>
+                            </td>
+                        </tr>)
+                    })}
 
 
 
-            </tbody>
-        </table>
-
+                </tbody>
+            </table>
+        </div>
 
         {showModal && <EditProduct productId={productIdEdit} setShowModal={showModal} closeModal={() => setShowModal(false)} reloadProduct={() => setUpdateProducts(!updateProducts)} />}
         <nav className='navbar navbar-expand-lg navbar-custom justify-content-center'>
-            <ul className="pagination">
+            <ul className="pagination ">
                 <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
                     <button
-                        className="page-link"
+                        className="page-link "
                         onClick={() => setCurrentPage(currentPage - 1)}
                     >
                         Précédent

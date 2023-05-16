@@ -111,14 +111,21 @@ const LoginPage = ({ setAuthenticated }) => {
 }
 
 const Wrapper = styled.div`
-margin-top:2rem;
-font-family:"maven_proregular";
-background-color:#fff;
-width:50%;
-min-height:50%;
-padding:2rem;
-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-`
+  margin-top: 2rem;
+  font-family: "maven_proregular";
+  background-color: #fff;
+  width: 80%;
+
+  padding: 2rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+  @media screen and (min-width: 1024px) {
+    width: 40%;
+  }
+  @media screen and (min-width: 1200px) {
+    width: 30%;
+  }
+`;
 
 const Button = styled.div`
 width:100%;

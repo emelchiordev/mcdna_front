@@ -32,7 +32,7 @@ const PublicCatalogPage = () => {
             if (res.status === 200) {
                 setCategories(res.data['hydra:member'])
             }
-        }).catch(error => console.log(error))
+        })
     }, [])
 
     const handleChange = event => {
@@ -64,12 +64,12 @@ const PublicCatalogPage = () => {
                         <ProductCard
                             key={product.id}
                             picture={IMAGE_URL + product.imageName}
-                            promo={product.discountPrice !== null && "promo"}
+                            promo={product.discountPrice !== undefined && "promo"}
                             label={product.label}
                             price={product.price}
                             description={product.description}
-                            remised_price={product.discountPrice !== null && (product.discountPrice[0]).toFixed(2)}
-                            percent_promo={product.discountPrice !== null && product.discountPrice[1]}
+                            remised_price={product.discountPrice !== undefined && (product.discountPrice[0]).toFixed(2)}
+                            percent_promo={product.discountPrice !== undefined && product.discountPrice[1]}
                         />
                     )
                 })}

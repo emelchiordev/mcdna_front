@@ -51,7 +51,7 @@ const AddProduct = ({ update, handleClose }) => {
         for (let key in product) {
             formData.append(key, product[key])
         }
-  
+
         CatalogApi.setProduct(formData).then((response) => {
             if (response.status === 201) {
                 inputFileRef.current.value = null
@@ -83,7 +83,7 @@ const AddProduct = ({ update, handleClose }) => {
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content rounded-0">
                         <div className="modal-header rounded-0" style={{ backgroundColor: '#007A3E', color: "white" }}>
-                            <h5 className="modal-title">Ajouter un produit</h5>
+                            <h5 className="modal-title ">Ajouter un produit</h5>
                             <button type="button" className="btn-close text-bg-light" data-bs-dismiss="modal" aria-label="Close" onClick={handleClose}></button>
                         </div>
                         <div className="modal-body">
@@ -165,6 +165,6 @@ transition: all 0.2s ease-in-out;
 &:active {
   transform: translateY(2px);
 }
-`;
+`
 
 export default AddProduct;

@@ -30,7 +30,7 @@ const EditProduct = ({ productId, setShowModal, closeModal, reloadProduct }) => 
                 return product
             }
         }
-
+        delete product.discountPrice
         CatalogApi.updateProduct(product.id, uriCategoryFactory(product)).then(response => {
             setErrorValidation({})
             reloadProduct()
