@@ -24,6 +24,7 @@
 :root {
     --primary-color: #007A3E;
     --secondary-color: #FFAE3B;
+
 }
 
 .navbar-brand,
@@ -62,4 +63,9 @@ input:focus {
     background-color: #007A3E;
     outline: none;
     /* optionnel : pour enlever le contour bleu */
+}
+
+body {
+    font-family: 'maven_proregular';
+
 }

@@ -16,6 +16,7 @@ const AddPromotion = ({ handleClose, productId }) => {
         event.preventDefault()
         setErrorValidation({})
         PromotionService.setPromotion(promotion).then(res => {
+
             if (res.status === 201) {
                 setReloadData(!reloadData)
             }
@@ -39,15 +40,16 @@ const AddPromotion = ({ handleClose, productId }) => {
             if (res.status === 204) {
                 setReloadData(!reloadData)
             }
-        }).catch(error => console.log(error))
+        }).catch()
     }
 
     useEffect(() => {
         PromotionService.getPromotion(productId).then((response) => {
+            console.log(response)
             if (response.status === 200) {
                 setPromotions(response.data["hydra:member"])
             }
-        }).catch(error => console.log(error))
+        }).catch()
     }, [reloadData])
 
 
@@ -131,7 +133,7 @@ const AddPromotion = ({ handleClose, productId }) => {
                                             <td className='text-center' scope='col'>{promotion.percentage} </td>
                                             <td className='text-center' scope='col'>{moment(promotion.startDate).format('DD/MM/YYYY')} </td>
                                             <td className='text-center' scope='col'>{moment(promotion.endDate).format('DD/MM/YYYY')} </td>
-                                            <td className='text-center' onClick={() => handleRemove(promotion.id)} style={{ cursor: "pointer" }}>
+                                            <td className='text-center' data-testid="delete-button" onClick={() => handleRemove(promotion.id)} style={{ cursor: "pointer" }}>
                                                 <FontAwesomeIcon icon={faTrash} />
                                             </td>
                                         </tr>)

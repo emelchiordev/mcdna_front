@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import newtorkicon from '../assets/footer/newtorkicon.png'
+import { Link, BrowserRouter } from 'react-router-dom';
+
 
 
 const Footer = () => {
@@ -16,10 +18,12 @@ const Footer = () => {
 
                 <MenuItem className='mt-4 pb-4'>
                     <ul className='d-flex justify-content-center flex-wrap p-1' style={{ "listStyle": "none", "padding": "0" }}>
-                        <li style={{ "flex-basis": "100%" }}>MENTIONS LEGALES</li>
-                        <li style={{ "flex-basis": "100%" }}>NOS CGU</li>
-                        <li style={{ "flex-basis": "100%" }}>CHARTE DES COOKIES</li>
-                        <li style={{ "flex-basis": "100%" }}>PREFERENCE DES COOKIES</li>
+
+
+                        <li style={{ flexBasis: "100%" }}><Link to="/mention-legales" className="nav-link">MENTIONS LEGALES</Link></li>
+                        <li style={{ flexBasis: "100%" }}><Link to="/cgu" className="nav-link">NOS CGU</Link></li>
+                        <li style={{ flexBasis: "100%" }}><Link to="/charte-sur-les-cookies" className="nav-link">CHARTE DES COOKIES</Link></li>
+
                     </ul>
                 </MenuItem>
             </div>

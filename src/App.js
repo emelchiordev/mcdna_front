@@ -13,6 +13,9 @@ import { checkJwtCookies } from "./services/checkJwtCookies";
 import CatalogUpdate from "./pages/CatalogUpdate";
 import { API_URL } from "./services/config";
 import ProtectedRoute from "./container/ProtectedRoute";
+import LegalPage from "./pages/LegalPage";
+import CoookiesPolicyPage from "./pages/CoookiesPolicyPage";
+import TermsPage from "./pages/TermsPage";
 
 
 
@@ -28,7 +31,6 @@ const App = () => {
                 <div container='fluid' className="vh-100 position-relative">
                     <Navbar></Navbar>
                     <Routes>
-
                         <Route path="/" element={<Homepage />} />
                         <Route path="/catalogue" element={<PublicCatalogPage />} />
                         <Route path="/promotions" element={<PublicPromotionPage />} />
@@ -39,6 +41,9 @@ const App = () => {
 
                         } />
                         <Route path="/espace-prive" element={<LoginPage />} />
+                        <Route path="/cgu" element={<TermsPage />} />
+                        <Route path="/mention-legales" element={<LegalPage />} />
+                        <Route path="/charte-sur-les-cookies" element={<CoookiesPolicyPage />} />
                     </Routes>
                     <Footer className="position-absolute bottom-0 left-0 right-0"></Footer>
                 </div>
