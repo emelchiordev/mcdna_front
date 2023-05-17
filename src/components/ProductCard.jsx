@@ -4,10 +4,9 @@ import product from '../assets/homepage/mock/product1.jpg'
 
 const ProductCard = ({ price, label, description, picture, percent_promo, promo, remised_price }) => {
     return (
-        <Wrapper>
+        <Wrapper promo={promo}>
             {promo ? <>
                 <div className='d-flex justify-content-between' style={{ maxHeight: '20px' }}>
-
                     <Promo>{promo && promo}</Promo>
                     <span className="badge rounded-pill text-bg-light d-flex justify-content-center align-items-center">
                         <PromoPercent>-{percent_promo && (Number.isInteger(parseInt(percent_promo)) ? parseInt(percent_promo).toFixed(0) : parseInt(percent_promo).toFixed(2)) + " %"}</PromoPercent>
@@ -18,35 +17,38 @@ const ProductCard = ({ price, label, description, picture, percent_promo, promo,
             <div className='d-flex justify-content-center'>
                 <Picture src={picture ? picture : product} alt='picture 1'></Picture>
             </div>
-
-
             <div className=''>
                 {promo ? <div>
-                    <span className='ms-2' style={{ "color": "red", "fontWeight": "bold" }}>{remised_price} €</span>
-                    <span style={{ "fontSize": "0.9rem" }}> au lieu de  {price} €</span></div> :
-
-                    <span className='ms-2' style={{ "fontWeight": "bold" }}>{price ? price + ' €' : "2.50€"}</span>
-
+                    <PromoPrice>
+                        <span className='ms-2' >{remised_price} €</span>
+                    </PromoPrice>
+                    <div className='ms-2' style={{ "fontSize": "0.9rem" }}> au lieu de  {price} €</div></div> :
+                    <Price>
+                        <span className='ms-2'>{price ? price + ' €' : "2.50€"}</span>
+                    </Price>
 
                 }
             </div>
             <div className='ms-2'>
-                {label ? label : "test produit"}
+                <Label>
+                    {label ? label : "test produit"}
+                </Label>
             </div>
             <br></br>
-            <div className='ms-2 fst-italic'>
+            <Description className='ms-2'>
                 {description ? description : "test produit"}
-            </div>
+            </Description>
         </Wrapper >
     )
 }
 const Wrapper = styled.div`
 width : 250px;
 font-family:"maven_proregular";
-height: 320px;
-background-color:#FFF;
-border:1px solid #f7f7f7;
+height: 360px;
+background-color:"#FFF";
+border:3px solid ${props => props.promo === "promo" ? "#fff0db" : "#f7f7f7"};
 overflow:hidden;
+
 `
 
 const Picture = styled.img`
@@ -67,6 +69,22 @@ margin-right:2px;
 `
 const PromoPicture = styled.img`
 max-width:150px;
+`
+
+const Label = styled.div`
+font-weight:bold;
+`
+const Price = styled.div`
+color:var(--primary-color);
+font-size:1.5rem;
+`
+const PromoPrice = styled.div`
+font-size:1.5rem;
+color:red;
+`
+
+const Description = styled.div`
+
 `
 
 export default ProductCard
