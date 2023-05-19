@@ -24,6 +24,12 @@ const LoginPage = ({ setAuthenticated }) => {
         setCredentials({ ...credentials, [name]: value });
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key == "Enter") {
+            handleSubmit()
+        }
+    }
+
     const handleSubmit = () => {
         console.log(credentials)
         setSending(true);
@@ -83,6 +89,8 @@ const LoginPage = ({ setAuthenticated }) => {
                                 onSelect={() => setError(false)}
                                 onChange={handleCredential}
                                 autoComplete="off"
+                                onKeyDown={handleKeyDown}
+
                             />
                             {error && (
                                 <p className="invalid-feedback">
