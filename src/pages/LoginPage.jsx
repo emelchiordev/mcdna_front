@@ -31,7 +31,6 @@ const LoginPage = ({ setAuthenticated }) => {
     }
 
     const handleSubmit = () => {
-        console.log(credentials)
         setSending(true);
         Loginapi.setLogin(credentials)
             .then((response) => {
@@ -41,7 +40,6 @@ const LoginPage = ({ setAuthenticated }) => {
                 }
             })
             .catch((error) => {
-                console.log(error);
                 setError(true);
                 setSending(false);
             });
