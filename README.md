@@ -31,6 +31,10 @@ git clone [https://github.com/votre-utilisateur/nom-du-projet.git](https://githu
 
 cd mercadona_front
 
-3.Installez les dépendances :
+3. Installez les dépendances :
 
 npm install
+
+## Utilisation
+
+npm start
