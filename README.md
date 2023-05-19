@@ -15,7 +15,7 @@ Assurez-vous d'avoir les éléments suivants installés avant de commencer :
 - Node.js
 - npm
 
-#ENVIRONNEMENT
+## ENVIRONNEMENT
 
 API_URL="adresse_backend/api/"
 
@@ -26,3 +26,11 @@ IMAGE_URL="adresse_backend/images/products/"
 1. Clonez le dépôt :
 
 git clone [https://github.com/votre-utilisateur/nom-du-projet.git](https://github.com/emelchiordev/mercadona_front.git)
+
+2. Accédez au répertoire du projet :
+
+cd mercadona_front
+
+3.Installez les dépendances :
+
+npm install
