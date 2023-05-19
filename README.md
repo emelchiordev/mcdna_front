@@ -1,6 +1,12 @@
 # mercadona_front
 
-Description du projet
+Partie FRONT de l'application MERCADONA
+
+[Documentation Technique Mercadona.pdf](https://github.com/emelchiordev/mercadona_front/files/11517382/Documentation.Technique.Mercadona.pdf)
+
+
+[Manuel utilisation Mercadona.pdf](https://github.com/emelchiordev/mercadona_front/files/11517384/Manuel.utilisation.Mercadona.pdf)
+
 
 ## Prérequis
 
