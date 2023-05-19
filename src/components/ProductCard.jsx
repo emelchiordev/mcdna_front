@@ -46,7 +46,7 @@ width : 250px;
 font-family:"maven_proregular";
 height: 360px;
 background-color:"#FFF";
-border:3px solid ${props => props.promo === "promo" ? "#fff0db" : "#f7f7f7"};
+border:${props => props.promo === "promo" ? "#fff0db 2px solid " : "#f7f7f7 3px solid "};
 overflow:hidden;
 
 `

@@ -19,7 +19,6 @@ const checkJwtCookies = () => {
                 store.dispatch(setAuthenticated({ status: true, roles }));
             }
         } catch (error) {
-            console.error("Invalid JWT token", error);
             store.dispatch(setAuthenticated({ status: false, roles: [] }));
         }
     } else {
@@ -28,7 +27,6 @@ const checkJwtCookies = () => {
 };
 
 const logout = () => {
-    console.log("im here")
     document.cookie = "jwt_hp=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     store.dispatch(setAuthenticated({ status: false, roles: [] }));
 };

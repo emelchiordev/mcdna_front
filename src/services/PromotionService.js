@@ -2,7 +2,6 @@ import axios from "axios"
 import { API_URL } from "./config"
 
 const setPromotion = async (promotion) => {
-    console.log("j'arrive ici")
     const response = await axios.post(API_URL + "promotions", promotion, {
         headers: {
             'Content-Type': 'application/json'
