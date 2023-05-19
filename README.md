@@ -25,4 +25,4 @@ IMAGE_URL="adresse_backend/images/products/"
 
 1. Clonez le dépôt :
 
-git clone https://github.com/votre-utilisateur/nom-du-projet.git
+git clone [https://github.com/votre-utilisateur/nom-du-projet.git](https://github.com/emelchiordev/mercadona_front.git)
